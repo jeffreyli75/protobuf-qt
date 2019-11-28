@@ -4,9 +4,10 @@ CONFIG -= app_bundle
 QT += qml
 
 TARGET = protobuf_qt_test
+DEFINES += PROTOBUF_USE_DLLS
 
-win32:INCLUDEPATH += $${PROTOBUF_SRC}
-win32:LIBS += -L$${PROTOBUF_LIBS}
+INCLUDEPATH += $$(PROTOBUF_SRC)
+LIBS += -L$$(PROTOBUF_LIBS)
 win32:LIBS += -llibprotobuf
 
 unix:LIBS += -lprotobuf
@@ -15,13 +16,15 @@ SOURCES += main_test.cpp
 
 PROTOS = test_messages_proto3.proto
 
-PROTOC = protoc
-PROTOC_GEN_QT=../compiler/protoc-gen-qt
+win32:PROTOC = $$(PROTOBUF_SRC)/../bin/win32-msvc/protoc.exe
+win32:PROTOC_GEN_QT=$$(PROTOBUF_SRC)/../bin/win32-msvc/protoc-gen-qt.exe
+unix:PROTOC = $$(PROTOBUF_SRC)/../bin/$${QT_XSPEC}/protoc
+unix:PROTOC_GEN_QT=$$(PROTOBUF_SRC)/../bin/$${QT_XSPEC}/protoc-gen-qt
 
 protobuf_decl.name = protobuf headers
 protobuf_decl.input = PROTOS
 protobuf_decl.output = ${QMAKE_FILE_IN_PATH}/${QMAKE_FILE_BASE}.pb.h
-protobuf_decl.commands = $${PROTOC} --plugin=protoc-gen-qt=$${PROTOC_GEN_QT} --cpp_out=${QMAKE_FILE_IN_PATH} --qt_out=${QMAKE_FILE_IN_PATH} -I=${QMAKE_FILE_IN_PATH} ${QMAKE_FILE_IN}
+protobuf_decl.commands = $${PROTOC} --plugin=protoc-gen-qt=$${PROTOC_GEN_QT} --cpp_out=${QMAKE_FILE_IN_PATH} --qt_out=${QMAKE_FILE_IN_PATH} -I=${QMAKE_FILE_IN_PATH} -I=$${INCLUDEPATH} ${QMAKE_FILE_IN}
 protobuf_decl.variable_out = HEADERS
 QMAKE_EXTRA_COMPILERS += protobuf_decl
 

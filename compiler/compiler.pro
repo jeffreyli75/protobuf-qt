@@ -4,9 +4,10 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 TARGET = protoc-gen-qt
+DEFINES += PROTOBUF_USE_DLLS
 
-win32:INCLUDEPATH += $${PROTOBUF_SRC}
-win32:LIBS += -L$${PROTOBUF_LIBS}
+win32:INCLUDEPATH += $$(PROTOBUF_SRC)
+win32:LIBS += -L$$(PROTOBUF_LIBS)
 
 CONFIG(debug, debug|release) {
     unix:LIBS += -lprotobuf -lprotoc
