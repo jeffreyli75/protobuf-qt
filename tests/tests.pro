@@ -18,8 +18,8 @@ PROTOS = test_messages_proto3.proto
 
 win32:PROTOC = $$(PROTOBUF_SRC)/../bin/win32-msvc/protoc.exe
 win32:PROTOC_GEN_QT=$$(PROTOBUF_SRC)/../bin/win32-msvc/protoc-gen-qt.exe
-unix:PROTOC = $$(PROTOBUF_SRC)/../bin/$${QT_XSPEC}/protoc
-unix:PROTOC_GEN_QT=$$(PROTOBUF_SRC)/../bin/$${QT_XSPEC}/protoc-gen-qt
+unix:PROTOC = $$(PROTOBUF_SRC)/../bin/$$[QMAKE_XSPEC]/protoc
+unix:PROTOC_GEN_QT=$$(PROTOBUF_SRC)/../bin/$$[QMAKE_XSPEC]/protoc-gen-qt
 
 protobuf_decl.name = protobuf headers
 protobuf_decl.input = PROTOS
